@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
+    protected $fillable = ['name', 'description', 'price'];
+
+    public function getPriceAttribute()
+    {
+        return $this->attributes['price'] / 100;
+    }
+
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
 }
