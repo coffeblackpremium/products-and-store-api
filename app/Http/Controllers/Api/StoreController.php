@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use \App\Models\Store;
 
 class StoreController extends Controller
 {
+
+    private $store;
+
+    public function __construct(Store $store)
+    {
+        $this->store = $store;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        return $this->store->paginate(10);
     }
 
     /**
@@ -25,40 +34,42 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->store->create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  store $store
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Store $store)
     {
-        //
+        return $store;
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Store  $store
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Store $store)
     {
-        //
+        $store->update($request->all());
+
+        return $store;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Store $store
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Store $store)
     {
-        //
+        return $store->delete();
     }
 }
